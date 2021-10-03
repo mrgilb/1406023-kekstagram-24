@@ -1,19 +1,18 @@
-function getRandomIntInclusive(min, max) {
+const  getRandomIntInclusive = (min, max) => {
   if (min >= 0 && max >= 0){
     if (min === max) {
-      return false;
+      return max;
     }
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (Math.max(min, max) - Math.min(min, max) + 1)) + Math.min(min, max);
   }
-}
+};
 
 getRandomIntInclusive(5, 1);
 
-function checksString (checkedString, maxLength) {
-  return checkedString.length <= maxLength;
-}
+const checksString = (checkedString, maxLength) => checkedString.length <= maxLength;
+
 
 checksString('asdassssd', 5);
 
@@ -23,15 +22,15 @@ const NAMES = ['Вася', 'Петя', 'Слава', 'Эля', 'Лена', 'Же
 const ids = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25];
 
 const usedIndexes = new Set();
-function getUniqueRandomNumber(callback) {
+const getUniqueRandomNumber = (callback) => {
   const newNumber = callback;
   if (usedIndexes.has(newNumber)) {
     return this.getUniqueRandomNumber(callback);
-  } else {
-    usedIndexes.add(newNumber);
-    return newNumber;
   }
-}
+  usedIndexes.add(newNumber);
+  return newNumber;
+
+};
 
 
 const getRandomArrayElement = (elements) => elements[getRandomIntInclusive(0, elements.length - 1)];
