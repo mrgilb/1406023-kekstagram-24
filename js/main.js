@@ -19,7 +19,11 @@ checksString('asdassssd', 5);
 const DESCRIPTIONS = ['Кот дома', 'В баре', 'На прогулке', 'Сплю', 'Соус по кошачьи', 'Не доволен', 'Пельмени с рыбой', 'Кошачья мята', 'Устал', 'В горах', 'На море', ' С друзьями'];
 const MESSAGES = ['Всё отлично!', 'В целом всё неплохо. Но не всё.'];
 const NAMES = ['Вася', 'Петя', 'Слава', 'Эля', 'Лена', 'Женя', 'Ира', 'Варя' , 'Уся' , 'Руся' ,'Катя', 'Хом', 'Гена'];
-const ids = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25];
+const itemsCount = 25;
+const MIN_LIKES = 15;
+const MAX_LIKES = 200;
+const MIN_ID_AVATAR = 1;
+const MAX_ID_AVATAR = 6;
 
 const usedIndexes = new Set();
 const getUniqueRandomNumber = (callback) => {
@@ -39,19 +43,20 @@ const getRandomArrayElement = (elements) => elements[getRandomIntInclusive(0, el
 const getComment = ()=> (
   {
     id: getUniqueRandomNumber(getRandomIntInclusive(Date.now(), Date.now()/2)),
-    avatar: `img/avatar-${getRandomIntInclusive(1, 6)}.svg`,
-    message: getRandomArrayElement(MESSAGES), name: getRandomArrayElement(NAMES),
+    avatar: `img/avatar-${getRandomIntInclusive(MIN_ID_AVATAR, MAX_ID_AVATAR)}.svg`,
+    message: getRandomArrayElement(MESSAGES),
+    name: getRandomArrayElement(NAMES),
   });
 
 const getPhotoDesc = (index)=>  ({
   id: index ,
   url: `photos/${index}.jpg`,
   description: getRandomArrayElement(DESCRIPTIONS),
-  likes: getRandomIntInclusive(15, 200),
+  likes: getRandomIntInclusive(MIN_LIKES, MAX_LIKES),
   comments: Array.from({length: getRandomIntInclusive(1, 5)}, getComment),
 });
 
 
-const libraryDesc = new Array(ids.length).fill(null).map((item, index) => getPhotoDesc(index));
+const libraryDesc = new Array(itemsCount).fill(null).map((item, index) => getPhotoDesc(index + 1));
 
 libraryDesc;
