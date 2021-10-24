@@ -34,6 +34,4 @@ const getPhotoDesc = (index)=>  ({
 
 const libraryDesc = new Array(itemsCount).fill(null).map((item, index) => getPhotoDesc(index + 1));
 
-libraryDesc;
-
 export {libraryDesc};
