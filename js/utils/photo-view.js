@@ -2,18 +2,8 @@ import './render-photos.js';
 
 const fullScreenPhotoContainer = document.querySelector('.big-picture ');
 const closeButtonBigPhoto = fullScreenPhotoContainer.querySelector('.big-picture__cancel');
-const bigPhoto = fullScreenPhotoContainer.querySelector('img');
-const bigPhotolikes = fullScreenPhotoContainer.querySelector('.likes-count');
-const bigPhotoCountComment = fullScreenPhotoContainer.querySelector('.social__comment-count');
-const bigPhotoDescription = fullScreenPhotoContainer.querySelector('.social__caption');
+const bigPhotoLikes = fullScreenPhotoContainer.querySelector('.likes-count');
 
-
-const getReplacementSymbolInStroke = (string, replacement) => {
-  const array = string.split(' ');
-  array[0] = replacement;
-  const newString = array.join(' ');
-  return newString;
-};
 
 const likesButton = fullScreenPhotoContainer.querySelector('.social__likes');
 const likesCount = likesButton.querySelector('.likes-count');
@@ -21,8 +11,8 @@ let numberLikes = likesCount.textContent;
 
 const isEnterKey = (evt) => evt.key === 'Enter';
 
-const onAddedLikes = (evt) => {
-  numberLikes = evt.target.textContent;
+const onAddedLikes = () => {
+  numberLikes = bigPhotoLikes.textContent;
   if (likesCount.classList.contains('likes-count--active')) {
     numberLikes--;
   }
@@ -36,7 +26,7 @@ const onAddedLikes = (evt) => {
 
 const onAddedLikesKeydown = (evt) => {
   if (isEnterKey(evt)) {
-    numberLikes = bigPhotolikes.textContent;
+    numberLikes = bigPhotoLikes.textContent;
     if (likesCount.classList.contains('likes-count--active')) {
       numberLikes--;
     }
@@ -69,44 +59,49 @@ const onCloseBigPhotoKeydown = (evt) => {
   }
 };
 
-const onOpenBigPhoto = (evt) => {
+
+const getCommentList = (elementDataBase) => {
+  const itemList = document.createElement('li');
+  const avatar = document.createElement('img');
+  const textComment = document.createElement('p');
+  itemList.classList.add('social__comment');
+  avatar.classList.add('social__picture');
+  textComment.classList.add('social__text');
+  itemList.appendChild(avatar);
+  itemList.appendChild(textComment);
+  avatar.src = elementDataBase.avatar;
+  textComment.textContent = elementDataBase.message;
+  return itemList;
+};
+
+const onOpenBigPhoto = (evt, dataUser) => {
   evt.preventDefault();
-  fullScreenPhotoContainer.classList.remove('hidden');
   closeButtonBigPhoto.addEventListener('click', onCloseBigPhoto);
   document.addEventListener('keydown', onCloseBigPhotoKeydown);
   likesButton.addEventListener('click', onAddedLikes);
   document.addEventListener('keydown', onAddedLikesKeydown);
-  const selectedMiniatureContainer = evt.currentTarget;
-  const selectedMiniaturePhoto = selectedMiniatureContainer.querySelector('.picture__img');
-  bigPhoto.src = selectedMiniaturePhoto.src;
-  const selectedMiniatureCommentsCount = String (selectedMiniatureContainer.querySelector('.picture__comments').textContent);
-  bigPhotoCountComment.textContent = getReplacementSymbolInStroke(bigPhotoCountComment.textContent, selectedMiniatureCommentsCount);
-  const selectedMiniatureLikes = selectedMiniatureContainer.querySelector('.picture__likes');
-  bigPhotolikes.textContent = selectedMiniatureLikes.textContent;
-  /* const selectedMiniatureDescription = ; */
-  bigPhotoDescription;
+
+  /* const bigPhotoCountComment = fullScreenPhotoContainer.querySelector('.comments-count'); */ // На будущее сохранил.
+  const bigPhotoDescription = fullScreenPhotoContainer.querySelector('.social__caption');
+  const bigPhoto = fullScreenPhotoContainer.querySelector('img');
+  const stringCommentDescription = fullScreenPhotoContainer.querySelector('.social__comment-count');
+
+  stringCommentDescription.textContent = `${dataUser.comments.length} из ${dataUser.comments.length} комментариев`;
+  bigPhotoDescription.textContent = dataUser.description;
+  bigPhoto.src = dataUser.url;
+  bigPhotoLikes.textContent = dataUser.likes;
+
+  const containerComments = fullScreenPhotoContainer.querySelector('.social__comments');
+  const listComments = dataUser.comments.map(getCommentList);
+  containerComments.innerHTML = '';
+  const addingComments = (chosenComment) => {
+    containerComments.appendChild(chosenComment);
+  };
+  listComments.forEach(addingComments);
+
+  fullScreenPhotoContainer.classList.remove('hidden');
   likesButton.focus();
 };
-
-/* const getCommentsUser = (dataUser) => {
-  const comments = dataUser.comments;
-  return comments;
-};
-
-const getDescriptionMiniature = (dataUser) => {
-  const description = dataUser.description;
-  return description;
-};
-
-console.log(libraryDesc.map(getDescriptionMiniature)); */
-
-/* const listUserComments = libraryDesc.map(getCommentsUser); */
-
-/* const renderComment = (listUserComments) => {
-
-} */
-
-/* console.log(listUserComments); */
 
 export {onOpenBigPhoto};
 

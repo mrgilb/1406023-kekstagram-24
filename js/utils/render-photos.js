@@ -9,10 +9,12 @@ const renderMiniature = (dataUser) => {
   const likes = newMiniature.querySelector('.picture__likes');
   const comments  = newMiniature.querySelector('.picture__comments');
   const containerNewMiniuature = newMiniature.querySelector('.picture');
+
   imagePath.src = dataUser.url;
   likes.textContent = dataUser.likes;
   comments.textContent = dataUser.comments.length;
-  containerNewMiniuature.addEventListener('click', onOpenBigPhoto);
+
+  containerNewMiniuature.addEventListener('click', (evt) => onOpenBigPhoto(evt, dataUser));
   return newMiniature;
 };
 
