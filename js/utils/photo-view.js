@@ -3,6 +3,7 @@ import './render-photos.js';
 const fullScreenPhotoContainer = document.querySelector('.big-picture ');
 const closeButtonBigPhoto = fullScreenPhotoContainer.querySelector('.big-picture__cancel');
 const bigPhotoLikes = fullScreenPhotoContainer.querySelector('.likes-count');
+const body = document.querySelector('body');
 
 
 const likesButton = fullScreenPhotoContainer.querySelector('.social__likes');
@@ -45,6 +46,7 @@ const onCloseBigPhoto = (evt) => {
     fullScreenPhotoContainer.classList.add('hidden');
     closeButtonBigPhoto.removeEventListener('click', onCloseBigPhoto);
     likesButton.removeEventListener('click', onAddedLikes);
+    body.classList.remove('modal-open');
   }
 };
 
@@ -56,6 +58,7 @@ const onCloseBigPhotoKeydown = (evt) => {
     fullScreenPhotoContainer.classList.add('hidden');
     document.removeEventListener('keydown', onCloseBigPhotoKeydown);
     likesButton.removeEventListener('click', onAddedLikes);
+    body.classList.remove('modal-open');
   }
 };
 
@@ -81,12 +84,14 @@ const onOpenBigPhoto = (evt, dataUser) => {
   likesButton.addEventListener('click', onAddedLikes);
   document.addEventListener('keydown', onAddedLikesKeydown);
 
-  /* const bigPhotoCountComment = fullScreenPhotoContainer.querySelector('.comments-count'); */ // На будущее сохранил.
+  const bigPhotoCountComment = fullScreenPhotoContainer.querySelector('.comments-count');
   const bigPhotoDescription = fullScreenPhotoContainer.querySelector('.social__caption');
   const bigPhoto = fullScreenPhotoContainer.querySelector('img');
   const stringCommentDescription = fullScreenPhotoContainer.querySelector('.social__comment-count');
+  const formLoadingNewComment = fullScreenPhotoContainer.querySelector('.comments-loader');
 
-  stringCommentDescription.textContent = `${dataUser.comments.length} из ${dataUser.comments.length} комментариев`;
+  /* stringCommentDescription.textContent = `${dataUser.comments.length} из ${dataUser.comments.length} комментариев`; */
+  bigPhotoCountComment.textContent = dataUser.comments.length;
   bigPhotoDescription.textContent = dataUser.description;
   bigPhoto.src = dataUser.url;
   bigPhotoLikes.textContent = dataUser.likes;
@@ -100,6 +105,10 @@ const onOpenBigPhoto = (evt, dataUser) => {
   listComments.forEach(addingComments);
 
   fullScreenPhotoContainer.classList.remove('hidden');
+  stringCommentDescription.classList.add('hidden');
+  formLoadingNewComment.classList.add('hidden');
+  body.classList.add('modal-open');
+
   likesButton.focus();
 };
 
