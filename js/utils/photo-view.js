@@ -88,7 +88,7 @@ const onOpenBigPhoto = (evt, dataUser) => {
   const bigPhotoDescription = fullScreenPhotoContainer.querySelector('.social__caption');
   const bigPhoto = fullScreenPhotoContainer.querySelector('img');
   const stringCommentDescription = fullScreenPhotoContainer.querySelector('.social__comment-count');
-  const formLoadingNewComment = fullScreenPhotoContainer.querySelector('.comments-loader');
+  const buttonLoadingNewComment = fullScreenPhotoContainer.querySelector('.comments-loader');
 
   /* stringCommentDescription.textContent = `${dataUser.comments.length} из ${dataUser.comments.length} комментариев`; */
   bigPhotoCountComment.textContent = dataUser.comments.length;
@@ -106,7 +106,7 @@ const onOpenBigPhoto = (evt, dataUser) => {
 
   fullScreenPhotoContainer.classList.remove('hidden');
   stringCommentDescription.classList.add('hidden');
-  formLoadingNewComment.classList.add('hidden');
+  buttonLoadingNewComment.classList.add('hidden');
   body.classList.add('modal-open');
 
   likesButton.focus();
