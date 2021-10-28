@@ -1,7 +1,5 @@
-import {checksString} from './utils/check-string-length.js';
 import './utils/render-photos.js';
+import './utils/form-upload-file.js';
 
-
-checksString('asd', 5);
 
 
