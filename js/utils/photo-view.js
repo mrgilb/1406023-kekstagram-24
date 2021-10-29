@@ -112,6 +112,6 @@ const onOpenBigPhoto = (evt, dataUser) => {
   likesButton.focus();
 };
 
-export {onOpenBigPhoto, isEscapeKey};
+export {onOpenBigPhoto, isEscapeKey, body};
 
 

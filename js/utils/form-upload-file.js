@@ -1,29 +1,49 @@
 import {isEscapeKey} from './photo-view.js';
 import {checksString} from './check-string-length.js';
+import {body} from './photo-view.js';
 
-const formUploadFile = document.querySelector('#upload-file');
+const MIN_HASHTAG_LENGTH = 3;
+const MAX_HASHTAG_LENGTH = 20;
+const MAX_COUNT_HASHTAGS = 5;
+const FIRST_SYMBOL_HASHTAG = '#';
+
+const formUploadFile = document.querySelector('#upload-select-image');
 const buttonCloseFormUploadFile = document.querySelector('#upload-cancel');
 const formEditImage = document.querySelector('.img-upload__overlay');
-
-const onCloseFormEditImage = () => {
-  formEditImage.classList.add('hidden');
-  formUploadFile.reset();
-};
+const inputFile = document.querySelector('#upload-file');
+const inputInputSelectedImage = document.querySelector('#upload-select-image');
 
 const onCloseFormEditImageKeydown = (evt) => {
   if (isEscapeKey(evt)){
     formEditImage.classList.add('hidden');
+    body.classList.remove('modal-open');
     formUploadFile.reset();
+    inputInputSelectedImage.reset();
   }
 };
 
-buttonCloseFormUploadFile.addEventListener('click', onCloseFormEditImage);
-document.addEventListener('keydown',onCloseFormEditImageKeydown);
+const onCloseFormEditImage = () => {
+  formEditImage.classList.add('hidden');
+  body.classList.remove('modal-open');
+  formUploadFile.reset();
+  inputInputSelectedImage.reset();
+};
 
+buttonCloseFormUploadFile.addEventListener('click', onCloseFormEditImage);
+
+
+const  onOpenFormEditImage = () => {
+  document.addEventListener('keydown',onCloseFormEditImageKeydown);
+  formEditImage.classList.remove('hidden');
+  body.classList.add('modal-open');
+};
+
+inputFile.addEventListener('input', onOpenFormEditImage);
 
 const inputHashtags = document.querySelector('.text__hashtags');
 // const buttonUploadComment = document.querySelector('#upload-submit');
-const regularExp = /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/;
+const regularExp = /[A-Za-zА-Яа-яЁё0-9]$/;
+
 
 const onRemoveKeyDown = () => {
   document.removeEventListener('keydown', onCloseFormEditImageKeydown);
@@ -36,25 +56,25 @@ const  onAddKeyDown = () => {
 inputHashtags.addEventListener('focus',onRemoveKeyDown);
 inputHashtags.addEventListener('blur', onAddKeyDown);
 
-
-const MIN_HASHTAG_LENGTH = 2;
-const MAX_HASHTAG_LENGTH = 20;
-const MAX_COUNT_HASHTAGS = 5;
-const FIRST_SYMBOL_HASHTAG = '#';
-
 const checkOneHashtag = (oneHashtag) => {
-  const lengthHashtag = oneHashtag.length;
+  const lengthHashtag = String(oneHashtag).length;
   if (!oneHashtag.startsWith(FIRST_SYMBOL_HASHTAG, 0)) {
     inputHashtags.setCustomValidity(`Первый символ должен быть ${FIRST_SYMBOL_HASHTAG}`);
   }
-  else if (lengthHashtag < MIN_HASHTAG_LENGTH) {
-    inputHashtags.setCustomValidity(`Хештег должен быть не короче ${MIN_HASHTAG_LENGTH} симв.`);
+  else  if(String(oneHashtag) === FIRST_SYMBOL_HASHTAG) {
+    inputHashtags.setCustomValidity(`Хештег не может содержать только ${FIRST_SYMBOL_HASHTAG}`);
   }
   else if (!regularExp.test(oneHashtag)) {
-    inputHashtags.setCustomValidity('Хештег может содержать только латинские и кириллические буквы, а так же цифры');
+    inputHashtags.setCustomValidity('Хештег может содержать только латинские и кириллические буквы.');
   }
   else if (lengthHashtag > MAX_HASHTAG_LENGTH) {
     inputHashtags.setCustomValidity(`Хештег должен быть не длиннее ${MAX_HASHTAG_LENGTH}`);
+    if(String(oneHashtag) === FIRST_SYMBOL_HASHTAG) {
+      inputHashtags.setCustomValidity(`Хештег не может содержать только ${FIRST_SYMBOL_HASHTAG}`);
+    }
+  }
+  else if (lengthHashtag < MIN_HASHTAG_LENGTH) {
+    inputHashtags.setCustomValidity(`Хештег должен быть не короче ${MIN_HASHTAG_LENGTH - 1} симв.`);
   }
   else {
     inputHashtags.setCustomValidity('');
@@ -69,7 +89,7 @@ const hasDuplicates = (array) => {
   return (new Set(newArray)).size !== newArray.length;
 };
 
-const onValidityHashTag = () => {
+const getValidityHashTag = () => {
   const listHashtags = inputHashtags.value.split(' ');
   if (hasDuplicates(listHashtags)) {
     inputHashtags.setCustomValidity('Хештеги должны быть разными');
@@ -83,15 +103,18 @@ const onValidityHashTag = () => {
   if (hasDuplicates(listHashtags)) {
     inputHashtags.setCustomValidity('Хештеги должны быть разными');
   }
+  if (listHashtags.includes(FIRST_SYMBOL_HASHTAG)) {
+    inputHashtags.setCustomValidity(`Хештег не может содержать только ${FIRST_SYMBOL_HASHTAG}`);
+  }
   inputHashtags.reportValidity();
 };
 
-inputHashtags.addEventListener('input', onValidityHashTag);
+inputHashtags.addEventListener('input', getValidityHashTag);
 
 const commentInput = document.querySelector('.text__description');
 const MAX_SYMBOLS_COMMENT = 140;
 
-const onValidComment = () => {
+const getValidComment = () => {
   const string = commentInput.value;
   if (!checksString(string, MAX_SYMBOLS_COMMENT)) {
     commentInput.setCustomValidity('Комментарий должен быть не более 140 символов');
@@ -101,7 +124,6 @@ const onValidComment = () => {
   commentInput.reportValidity();
 };
 
-commentInput.addEventListener('input', onValidComment);
+commentInput.addEventListener('input', getValidComment);
 commentInput.addEventListener('focus', onRemoveKeyDown);
 commentInput.addEventListener('blur', onAddKeyDown);
-
