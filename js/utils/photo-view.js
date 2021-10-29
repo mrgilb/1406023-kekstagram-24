@@ -75,6 +75,8 @@ const onOpenBigPhoto = (evt, dataUser) => {
   const bigPhoto = fullScreenPhotoContainer.querySelector('img');
   const initialCommentCount = fullScreenPhotoContainer.querySelector('.initial-comments-count');
 
+  initialCommentCount.textContent = '5';
+
   bigPhotoCountComment.textContent = dataUser.comments.length;
   bigPhotoDescription.textContent = dataUser.description;
   bigPhoto.src = dataUser.url;
