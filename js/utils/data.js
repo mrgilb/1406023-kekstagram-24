@@ -28,7 +28,7 @@ const getPhotoDesc = (index)=>  ({
   url: `photos/${index}.jpg`,
   description: getRandomArrayElement(DESCRIPTIONS),
   likes: getRandomIntInclusive(MIN_LIKES, MAX_LIKES),
-  comments: Array.from({length: getRandomIntInclusive(1, 5)}, getComment),
+  comments: Array.from({length: getRandomIntInclusive(15, 40)}, getComment),
 });
 
 
