@@ -4,12 +4,16 @@ const fullScreenPhotoContainer = document.querySelector('.big-picture ');
 const closeButtonBigPhoto = fullScreenPhotoContainer.querySelector('.big-picture__cancel');
 const bigPhotoLikes = fullScreenPhotoContainer.querySelector('.likes-count');
 const body = document.querySelector('body');
-
-
 const likesButton = fullScreenPhotoContainer.querySelector('.social__likes');
 const likesCount = likesButton.querySelector('.likes-count');
-let numberLikes = likesCount.textContent;
 const buttonLoadingNewComment = fullScreenPhotoContainer.querySelector('.comments-loader');
+const bigPhotoCountComment = fullScreenPhotoContainer.querySelector('.comments-count');
+const bigPhotoDescription = fullScreenPhotoContainer.querySelector('.social__caption');
+const bigPhoto = fullScreenPhotoContainer.querySelector('img');
+const initialCommentCount = fullScreenPhotoContainer.querySelector('.initial-comments-count');
+const containerComments = fullScreenPhotoContainer.querySelector('.social__comments');
+let numberLikes = likesCount.textContent;
+let currentCommentsList;
 
 const addingFixedCountComment = (array, maxComment) => array.slice(0, maxComment);
 let quantityComment = 5;
@@ -20,7 +24,7 @@ const increaseCountComment = () => {
 
 const isEnterKey = (evt) => evt.key === 'Enter';
 
-const onAddedLikes = () => {
+const addedLikes = () => {
   numberLikes = bigPhotoLikes.textContent;
   if (likesCount.classList.contains('likes-count--active')) {
     numberLikes--;
@@ -33,18 +37,16 @@ const onAddedLikes = () => {
   likesCount.classList.toggle('likes-count--active');
 };
 
+
+const onAddedLikes = (evt) => {
+  evt.preventDefault();
+  addedLikes();
+};
+
 const onAddedLikesKeydown = (evt) => {
   if (isEnterKey(evt)) {
-    numberLikes = bigPhotoLikes.textContent;
-    if (likesCount.classList.contains('likes-count--active')) {
-      numberLikes--;
-    }
-    else {
-      numberLikes++;
-    }
-
-    likesCount.textContent = numberLikes;
-    likesCount.classList.toggle('likes-count--active');
+    evt.preventDefault();
+    addedLikes();
   }
 };
 
@@ -64,69 +66,69 @@ const getCommentList = (elementDataBase) => {
   return itemList;
 };
 
+const addOneComment = (chosenComment) => {
+  containerComments.appendChild(chosenComment);
+};
+
+
+const getChangedListComment = (evt, array) => {
+  evt.preventDefault();
+  increaseCountComment();
+  const newComments = addingFixedCountComment(array, quantityComment);
+  initialCommentCount.textContent = newComments.length;
+  if (array.length === newComments.length){
+    buttonLoadingNewComment.classList.add('hidden');
+  }
+  containerComments.innerHTML = '';
+  newComments.forEach(addOneComment);
+};
+
+const onChangedList = (evt) => getChangedListComment(evt, currentCommentsList);
+
+const closeBigPhoto = () => {
+  fullScreenPhotoContainer.classList.add('hidden');
+  likesButton.removeEventListener('click', onAddedLikes);
+  body.classList.remove('modal-open');
+  buttonLoadingNewComment.removeEventListener('click', onChangedList);
+  document.removeEventListener('keydown', onAddedLikesKeydown);
+};
+
+const onCloseBigPhotoKeydown = (evt) => {
+  if (isEscapeKey(evt)) {
+    closeBigPhoto();
+    document.removeEventListener('keydown', onCloseBigPhotoKeydown);
+  }
+};
+
+const onCloseBigPhoto = (evt) => {
+  evt.preventDefault();
+  closeBigPhoto();
+  document.removeEventListener('keydown', onCloseBigPhotoKeydown);
+};
 
 const onOpenBigPhoto = (evt, dataUser) => {
   evt.preventDefault();
   quantityComment = 5;
-  likesButton.addEventListener('click', onAddedLikes);
-  document.addEventListener('keydown', onAddedLikesKeydown);
-  const bigPhotoCountComment = fullScreenPhotoContainer.querySelector('.comments-count');
-  const bigPhotoDescription = fullScreenPhotoContainer.querySelector('.social__caption');
-  const bigPhoto = fullScreenPhotoContainer.querySelector('img');
-  const initialCommentCount = fullScreenPhotoContainer.querySelector('.initial-comments-count');
 
-  initialCommentCount.textContent = '5';
-
+  initialCommentCount.textContent = String(quantityComment);
   bigPhotoCountComment.textContent = dataUser.comments.length;
   bigPhotoDescription.textContent = dataUser.description;
   bigPhoto.src = dataUser.url;
   bigPhotoLikes.textContent = dataUser.likes;
 
-  const containerComments = fullScreenPhotoContainer.querySelector('.social__comments');
-  const listComments = dataUser.comments.map(getCommentList);
+  currentCommentsList = dataUser.comments.map(getCommentList);
   containerComments.innerHTML = '';
 
-  const addOneComment = (chosenComment) => {
-    containerComments.appendChild(chosenComment);
-  };
-  const fixedListComment = addingFixedCountComment(listComments, quantityComment);
+  const fixedListComment = addingFixedCountComment(currentCommentsList, quantityComment);
   fixedListComment.forEach(addOneComment);
-
-  const getCanhgedListComment = () => {
-    increaseCountComment();
-    const newComments = addingFixedCountComment(listComments, quantityComment);
-    initialCommentCount.textContent = newComments.length;
-    containerComments.innerHTML = '';
-    newComments.forEach(addOneComment);
-  };
-
-  buttonLoadingNewComment.addEventListener('click', getCanhgedListComment);
-
-  const onCloseBigPhotoKeydown = (Event) => {
-    if (isEscapeKey(Event)) {
-      Event.preventDefault();
-      fullScreenPhotoContainer.classList.add('hidden');
-      likesButton.removeEventListener('click', onAddedLikes);
-      body.classList.remove('modal-open');
-      buttonLoadingNewComment.removeEventListener('click', getCanhgedListComment);
-      document.removeEventListener('keydown', onCloseBigPhotoKeydown);
-    }
-  };
-
-  closeButtonBigPhoto.addEventListener('click', () => {
-    fullScreenPhotoContainer.classList.add('hidden');
-    likesButton.removeEventListener('click', onAddedLikes);
-    body.classList.remove('modal-open');
-    buttonLoadingNewComment.removeEventListener('click', getCanhgedListComment);}, {once:true});
-
-
+  buttonLoadingNewComment.addEventListener('click', onChangedList);
+  likesButton.addEventListener('click', onAddedLikes);
+  document.addEventListener('keydown', onAddedLikesKeydown);
+  closeButtonBigPhoto.addEventListener('click', onCloseBigPhoto, {once:true});
   document.addEventListener('keydown', onCloseBigPhotoKeydown);
 
   fullScreenPhotoContainer.classList.remove('hidden');
-  // stringCommentDescription.classList.add('hidden');
-  // buttonLoadingNewComment.classList.add('hidden');
   body.classList.add('modal-open');
-
   likesButton.focus();
 };
 
