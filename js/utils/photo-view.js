@@ -127,6 +127,7 @@ const onOpenBigPhoto = (evt, dataUser) => {
   closeButtonBigPhoto.addEventListener('click', onCloseBigPhoto, {once:true});
   document.addEventListener('keydown', onCloseBigPhotoKeydown);
 
+  buttonLoadingNewComment.classList.remove('hidden');
   fullScreenPhotoContainer.classList.remove('hidden');
   body.classList.add('modal-open');
   likesButton.focus();
