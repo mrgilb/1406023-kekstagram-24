@@ -1,6 +1,7 @@
 import {isEscapeKey} from './photo-view.js';
 import {checksString} from './check-string-length.js';
 import {body} from './photo-view.js';
+import {addSizePhotoButton, reduceSizePhotoButton, getReSizePhoto} from './editing-photo.js';
 
 const MIN_HASHTAG_LENGTH = 3;
 const MAX_HASHTAG_LENGTH = 20;
@@ -17,6 +18,8 @@ const onCloseFormEditImageKeydown = (evt) => {
   if (isEscapeKey(evt)){
     formEditImage.classList.add('hidden');
     body.classList.remove('modal-open');
+    addSizePhotoButton.removeEventListener('click', getReSizePhoto);
+    reduceSizePhotoButton.removeEventListener('click', getReSizePhoto);
     formUploadFile.reset();
     inputInputSelectedImage.reset();
   }
@@ -25,6 +28,8 @@ const onCloseFormEditImageKeydown = (evt) => {
 const onCloseFormEditImage = () => {
   formEditImage.classList.add('hidden');
   body.classList.remove('modal-open');
+  addSizePhotoButton.removeEventListener('click', getReSizePhoto);
+  reduceSizePhotoButton.removeEventListener('click', getReSizePhoto);
   formUploadFile.reset();
   inputInputSelectedImage.reset();
 };
