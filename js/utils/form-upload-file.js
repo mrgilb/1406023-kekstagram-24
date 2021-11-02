@@ -1,54 +1,64 @@
 import {isEscapeKey} from './photo-view.js';
 import {checksString} from './check-string-length.js';
 import {body} from './photo-view.js';
-import {addSizePhotoButton, reduceSizePhotoButton, getReSizePhoto} from './editing-photo.js';
+import {
+  rangeContainer,
+  addSizePhotoButton,
+  reduceSizePhotoButton,
+  listEffects,
+  onUpdateSlider,
+  getReSizePhoto,
+  onAddEffect,
+  boxWithSize,
+  closeFormEditImage, sizePhoto
+} from './editing-photo.js';
 
 const MIN_HASHTAG_LENGTH = 3;
 const MAX_HASHTAG_LENGTH = 20;
 const MAX_COUNT_HASHTAGS = 5;
 const FIRST_SYMBOL_HASHTAG = '#';
+const MAX_SYMBOLS_COMMENT = 140;
 
 const formUploadFile = document.querySelector('#upload-select-image');
 const buttonCloseFormUploadFile = document.querySelector('#upload-cancel');
 const formEditImage = document.querySelector('.img-upload__overlay');
 const inputFile = document.querySelector('#upload-file');
-const inputInputSelectedImage = document.querySelector('#upload-select-image');
+const inputHashtags = document.querySelector('.text__hashtags');
+const regularExp = /[A-Za-zА-Яа-яЁё0-9]$/;
+const commentInput = document.querySelector('.text__description');
 
 const onCloseFormEditImageKeydown = (evt) => {
   if (isEscapeKey(evt)){
-    formEditImage.classList.add('hidden');
-    body.classList.remove('modal-open');
-    addSizePhotoButton.removeEventListener('click', getReSizePhoto);
-    reduceSizePhotoButton.removeEventListener('click', getReSizePhoto);
-    formUploadFile.reset();
-    inputInputSelectedImage.reset();
+    closeFormEditImage();
+    document.removeEventListener('keydown', onCloseFormEditImageKeydown);
   }
 };
 
 const onCloseFormEditImage = () => {
-  formEditImage.classList.add('hidden');
-  body.classList.remove('modal-open');
-  addSizePhotoButton.removeEventListener('click', getReSizePhoto);
-  reduceSizePhotoButton.removeEventListener('click', getReSizePhoto);
-  formUploadFile.reset();
-  inputInputSelectedImage.reset();
+  closeFormEditImage();
+  document.removeEventListener('keydown', onCloseFormEditImageKeydown);
 };
+
 
 buttonCloseFormUploadFile.addEventListener('click', onCloseFormEditImage);
 
 
 const  onOpenFormEditImage = () => {
-  document.addEventListener('keydown',onCloseFormEditImageKeydown);
   formEditImage.classList.remove('hidden');
   body.classList.add('modal-open');
+  boxWithSize.value = `${sizePhoto*100}%`;
+
+  rangeContainer.noUiSlider.on('update',onUpdateSlider);
+  addSizePhotoButton.addEventListener('click', getReSizePhoto);
+  reduceSizePhotoButton.addEventListener('click', getReSizePhoto);
+  listEffects.addEventListener('click',onAddEffect);
+  document.addEventListener('keydown',onCloseFormEditImageKeydown);
 };
 
 inputFile.addEventListener('input', onOpenFormEditImage);
 
-const inputHashtags = document.querySelector('.text__hashtags');
-// const buttonUploadComment = document.querySelector('#upload-submit');
-const regularExp = /[A-Za-zА-Яа-яЁё0-9]$/;
 
+// const buttonUploadComment = document.querySelector('#upload-submit');
 
 const onRemoveKeyDown = () => {
   document.removeEventListener('keydown', onCloseFormEditImageKeydown);
@@ -116,9 +126,6 @@ const getValidityHashTag = () => {
 
 inputHashtags.addEventListener('input', getValidityHashTag);
 
-const commentInput = document.querySelector('.text__description');
-const MAX_SYMBOLS_COMMENT = 140;
-
 const getValidComment = () => {
   const string = commentInput.value;
   if (!checksString(string, MAX_SYMBOLS_COMMENT)) {
@@ -132,3 +139,6 @@ const getValidComment = () => {
 commentInput.addEventListener('input', getValidComment);
 commentInput.addEventListener('focus', onRemoveKeyDown);
 commentInput.addEventListener('blur', onAddKeyDown);
+
+
+export {formEditImage, formUploadFile};
