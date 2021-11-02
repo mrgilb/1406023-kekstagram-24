@@ -8,13 +8,13 @@ const renderMiniature = (dataUser) => {
   const imagePath = newMiniature.querySelector('.picture__img');
   const likes = newMiniature.querySelector('.picture__likes');
   const comments  = newMiniature.querySelector('.picture__comments');
-  const containerNewMiniuature = newMiniature.querySelector('.picture');
+  const containerNewMiniature = newMiniature.querySelector('.picture');
 
   imagePath.src = dataUser.url;
   likes.textContent = dataUser.likes;
   comments.textContent = dataUser.comments.length;
 
-  containerNewMiniuature.addEventListener('click', (evt) => onOpenBigPhoto(evt, dataUser));
+  containerNewMiniature.addEventListener('click', (evt) => onOpenBigPhoto(evt, dataUser));
   return newMiniature;
 };
 

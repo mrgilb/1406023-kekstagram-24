@@ -6,27 +6,31 @@ const MIN_HASHTAG_LENGTH = 3;
 const MAX_HASHTAG_LENGTH = 20;
 const MAX_COUNT_HASHTAGS = 5;
 const FIRST_SYMBOL_HASHTAG = '#';
+const MAX_SYMBOLS_COMMENT = 140;
 
 const formUploadFile = document.querySelector('#upload-select-image');
 const buttonCloseFormUploadFile = document.querySelector('#upload-cancel');
 const formEditImage = document.querySelector('.img-upload__overlay');
 const inputFile = document.querySelector('#upload-file');
-const inputInputSelectedImage = document.querySelector('#upload-select-image');
+const inputHashtags = document.querySelector('.text__hashtags');
+const regularExp = /[A-Za-zА-Яа-яЁё0-9]$/;
+const commentInput = document.querySelector('.text__description');
+
+
+const closeFormEditImage = () => {
+  formEditImage.classList.add('hidden');
+  body.classList.remove('modal-open');
+  formUploadFile.reset();
+};
 
 const onCloseFormEditImageKeydown = (evt) => {
   if (isEscapeKey(evt)){
-    formEditImage.classList.add('hidden');
-    body.classList.remove('modal-open');
-    formUploadFile.reset();
-    inputInputSelectedImage.reset();
+    closeFormEditImage();
   }
 };
 
 const onCloseFormEditImage = () => {
-  formEditImage.classList.add('hidden');
-  body.classList.remove('modal-open');
-  formUploadFile.reset();
-  inputInputSelectedImage.reset();
+  closeFormEditImage();
 };
 
 buttonCloseFormUploadFile.addEventListener('click', onCloseFormEditImage);
@@ -40,10 +44,8 @@ const  onOpenFormEditImage = () => {
 
 inputFile.addEventListener('input', onOpenFormEditImage);
 
-const inputHashtags = document.querySelector('.text__hashtags');
-// const buttonUploadComment = document.querySelector('#upload-submit');
-const regularExp = /[A-Za-zА-Яа-яЁё0-9]$/;
 
+// const buttonUploadComment = document.querySelector('#upload-submit');
 
 const onRemoveKeyDown = () => {
   document.removeEventListener('keydown', onCloseFormEditImageKeydown);
@@ -110,9 +112,6 @@ const getValidityHashTag = () => {
 };
 
 inputHashtags.addEventListener('input', getValidityHashTag);
-
-const commentInput = document.querySelector('.text__description');
-const MAX_SYMBOLS_COMMENT = 140;
 
 const getValidComment = () => {
   const string = commentInput.value;
