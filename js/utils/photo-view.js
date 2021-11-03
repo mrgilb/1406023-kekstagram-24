@@ -1,5 +1,6 @@
 import './render-photos.js';
 
+
 const fullScreenPhotoContainer = document.querySelector('.big-picture ');
 const closeButtonBigPhoto = fullScreenPhotoContainer.querySelector('.big-picture__cancel');
 const bigPhotoLikes = fullScreenPhotoContainer.querySelector('.likes-count');

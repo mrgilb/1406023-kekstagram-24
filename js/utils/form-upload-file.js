@@ -1,6 +1,17 @@
 import {isEscapeKey} from './photo-view.js';
 import {checksString} from './check-string-length.js';
 import {body} from './photo-view.js';
+import {
+  rangeContainer,
+  addSizePhotoButton,
+  reduceSizePhotoButton,
+  listEffects,
+  onUpdateSlider,
+  getReSizePhoto,
+  onAddEffect,
+  boxWithSize,
+  closeFormEditImage, sizePhoto
+} from './editing-photo.js';
 
 const MIN_HASHTAG_LENGTH = 3;
 const MAX_HASHTAG_LENGTH = 20;
@@ -16,30 +27,32 @@ const inputHashtags = document.querySelector('.text__hashtags');
 const regularExp = /[A-Za-zА-Яа-яЁё0-9]$/;
 const commentInput = document.querySelector('.text__description');
 
-
-const closeFormEditImage = () => {
-  formEditImage.classList.add('hidden');
-  body.classList.remove('modal-open');
-  formUploadFile.reset();
-};
-
 const onCloseFormEditImageKeydown = (evt) => {
   if (isEscapeKey(evt)){
     closeFormEditImage();
+    document.removeEventListener('keydown', onCloseFormEditImageKeydown);
   }
 };
 
 const onCloseFormEditImage = () => {
   closeFormEditImage();
+  document.removeEventListener('keydown', onCloseFormEditImageKeydown);
 };
+
 
 buttonCloseFormUploadFile.addEventListener('click', onCloseFormEditImage);
 
 
 const  onOpenFormEditImage = () => {
-  document.addEventListener('keydown',onCloseFormEditImageKeydown);
   formEditImage.classList.remove('hidden');
   body.classList.add('modal-open');
+  boxWithSize.value = `${sizePhoto*100}%`;
+
+  rangeContainer.noUiSlider.on('update',onUpdateSlider);
+  addSizePhotoButton.addEventListener('click', getReSizePhoto);
+  reduceSizePhotoButton.addEventListener('click', getReSizePhoto);
+  listEffects.addEventListener('click',onAddEffect);
+  document.addEventListener('keydown',onCloseFormEditImageKeydown);
 };
 
 inputFile.addEventListener('input', onOpenFormEditImage);
@@ -126,3 +139,6 @@ const getValidComment = () => {
 commentInput.addEventListener('input', getValidComment);
 commentInput.addEventListener('focus', onRemoveKeyDown);
 commentInput.addEventListener('blur', onAddKeyDown);
+
+
+export {formEditImage, formUploadFile};
