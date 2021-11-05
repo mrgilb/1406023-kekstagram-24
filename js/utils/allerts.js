@@ -27,31 +27,34 @@ const showAlert = (message) => {
 export {showAlert};
 
 const containerShowSuccessfulPost = document.querySelector('#success').content;
-const newAllert = containerShowSuccessfulPost.cloneNode(true);
-const containerNewAllert = newAllert.querySelector('.success');
-const cancelButtonSuccessfulAllert = newAllert.querySelector('.success__button');
 
-const onKeydownCloseAllert = (evt) => {
-  if (isEscapeKey(evt)) {
-    containerNewAllert.remove();
-    document.removeEventListener('keydown', onKeydownCloseAllert);
-  }
-};
-
-const onClickCloseAllert = (evt) => {
-  if (evt.target.matches('.success')) {
-    containerNewAllert.remove();
-    document.removeEventListener('keydown', onKeydownCloseAllert);
-  }
-};
-
-const onClickButtonAllert = (evt) => {
-  evt.preventDefault();
-  containerNewAllert.remove();
-  document.removeEventListener('keydown', onKeydownCloseAllert);
-};
 
 const showSuccessfulPost = () => {
+  const newAllert = containerShowSuccessfulPost.cloneNode(true);
+  const containerNewAllert = newAllert.querySelector('.success');
+  const cancelButtonSuccessfulAllert = newAllert.querySelector('.success__button');
+
+
+  const onKeydownCloseAllert = (evt) => {
+    if (isEscapeKey(evt)) {
+      containerNewAllert.remove();
+      document.removeEventListener('keydown', onKeydownCloseAllert);
+    }
+  };
+
+  const onClickCloseAllert = (evt) => {
+    if (evt.target.matches('.success')) {
+      containerNewAllert.remove();
+      document.removeEventListener('keydown', onKeydownCloseAllert);
+    }
+  };
+
+  const onClickButtonAllert = (evt) => {
+    evt.preventDefault();
+    containerNewAllert.remove();
+    document.removeEventListener('keydown', onKeydownCloseAllert);
+  };
+
   body.appendChild(newAllert);
   document.addEventListener('keydown', onKeydownCloseAllert);
   containerNewAllert.addEventListener('click', onClickCloseAllert);
@@ -61,32 +64,34 @@ const showSuccessfulPost = () => {
 export {showSuccessfulPost};
 
 const sampleUnsuccessfulAllert = document.querySelector('#error').content;
-const newUnsuccessfulAllert = sampleUnsuccessfulAllert.cloneNode(true);
-const containerUnsuccessfulAllert = newUnsuccessfulAllert.querySelector('.error');
-const cancelButtonUnsuccessfulAllert = newUnsuccessfulAllert.querySelector('.error__button');
-
-
-const onKeydownCloseUnsuccessfulAllert = (evt) => {
-  if (isEscapeKey(evt)) {
-    containerUnsuccessfulAllert.remove();
-    document.removeEventListener('keydown', onKeydownCloseUnsuccessfulAllert);
-  }
-};
-
-const onClickCloseUnsuccessfulAllert = (evt) => {
-  if (evt.target.matches('.error')) {
-    containerUnsuccessfulAllert.remove();
-    document.removeEventListener('keydown', onKeydownCloseUnsuccessfulAllert);
-  }
-};
-
-const onClickButtonUnsuccessfulAllert = (evt) => {
-  evt.preventDefault();
-  containerUnsuccessfulAllert.remove();
-  document.removeEventListener('keydown', onKeydownCloseUnsuccessfulAllert);
-};
 
 const showUnsuccessfulPost = () => {
+  const newUnsuccessfulAllert = sampleUnsuccessfulAllert.cloneNode(true);
+  const containerUnsuccessfulAllert = newUnsuccessfulAllert.querySelector('.error');
+  const cancelButtonUnsuccessfulAllert = newUnsuccessfulAllert.querySelector('.error__button');
+
+
+  const onKeydownCloseUnsuccessfulAllert = (evt) => {
+    if (isEscapeKey(evt)) {
+      containerUnsuccessfulAllert.remove();
+      document.removeEventListener('keydown', onKeydownCloseUnsuccessfulAllert);
+    }
+  };
+
+  const onClickCloseUnsuccessfulAllert = (evt) => {
+    if (evt.target.matches('.error')) {
+      containerUnsuccessfulAllert.remove();
+      document.removeEventListener('keydown', onKeydownCloseUnsuccessfulAllert);
+    }
+  };
+
+  const onClickButtonUnsuccessfulAllert = (evt) => {
+    evt.preventDefault();
+    containerUnsuccessfulAllert.remove();
+    document.removeEventListener('keydown', onKeydownCloseUnsuccessfulAllert);
+  };
+
+
   body.appendChild(newUnsuccessfulAllert);
   document.addEventListener('keydown', onKeydownCloseUnsuccessfulAllert);
   containerUnsuccessfulAllert.addEventListener('click', onClickCloseUnsuccessfulAllert);
