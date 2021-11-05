@@ -55,6 +55,7 @@ const effects = [
     max : 1,
     start: 1,
     step: 0.1,
+    unit : '',
   },
   {
     effect: 'sepia',
@@ -64,6 +65,7 @@ const effects = [
     max : 1,
     start: 1,
     step: 0.1,
+    unit : '',
   },
   {
     effect: 'invert',
@@ -93,6 +95,7 @@ const effects = [
     max : 3,
     start: 3,
     step: 0.1,
+    unit : '',
   },
   {
     id: 'effect-none',
@@ -100,6 +103,7 @@ const effects = [
     max : 3,
     start: 3,
     step: 0.1,
+    unit : '',
   },
 ];
 
@@ -109,10 +113,6 @@ const onUpdateSlider = (handle) => {
     const changedEffect = effect.class;
     if (arrayClass.includes(changedEffect)) {
       currentPositionSlider = handle;
-      if (effect.unit === undefined){
-        photo.style.filter = `${effect.effect}(${currentPositionSlider})`;
-        formForSubmiting.value = `${effect.effect}(${currentPositionSlider})`;
-      }
       photo.style.filter = `${effect.effect}(${currentPositionSlider}${effect.unit})`;
       formForSubmiting.value = `${effect.effect}(${currentPositionSlider}${effect.unit})`;
     }
@@ -146,15 +146,17 @@ const onAddEffect = (evt) => {
   }
 };
 
-
 const closeFormEditImage = () => {
   sizePhoto = 1;
   photo.className = '';
   photo.removeAttribute('style');
   photo.style.transform = `scale(${sizePhoto})`;
-  boxWithSize.value = `${sizePhoto*100}%`;
   defaultRadioChecked.checked = true;
+  rangeContainer.noUiSlider.set(rangeContainer.noUiSlider.max);
+  formForSubmiting.value = '';
+  rangeContainer.noUiSlider.off('update',onUpdateSlider);
 
+  fieldsetForRange.classList.add('hidden');
   formEditImage.classList.add('hidden');
   body.classList.remove('modal-open');
   rangeContainer.noUiSlider.on('update',onUpdateSlider);
@@ -165,4 +167,4 @@ const closeFormEditImage = () => {
 };
 
 
-export {rangeContainer, addSizePhotoButton, reduceSizePhotoButton, listEffects, photo,sizePhoto, onUpdateSlider, getReSizePhoto,onAddEffect, boxWithSize,closeFormEditImage };
+export {rangeContainer, addSizePhotoButton, reduceSizePhotoButton, listEffects, onUpdateSlider, getReSizePhoto,onAddEffect, closeFormEditImage};

@@ -9,9 +9,9 @@ import {
   onUpdateSlider,
   getReSizePhoto,
   onAddEffect,
-  boxWithSize,
-  closeFormEditImage, sizePhoto
+  closeFormEditImage
 } from './editing-photo.js';
+import {sendPhoto} from './new-data.js';
 
 const MIN_HASHTAG_LENGTH = 3;
 const MAX_HASHTAG_LENGTH = 20;
@@ -26,6 +26,7 @@ const inputFile = document.querySelector('#upload-file');
 const inputHashtags = document.querySelector('.text__hashtags');
 const regularExp = /[A-Za-zА-Яа-яЁё0-9]$/;
 const commentInput = document.querySelector('.text__description');
+const buttonSendPhoto = document.querySelector('#upload-submit');
 
 const onCloseFormEditImageKeydown = (evt) => {
   if (isEscapeKey(evt)){
@@ -46,7 +47,6 @@ buttonCloseFormUploadFile.addEventListener('click', onCloseFormEditImage);
 const  onOpenFormEditImage = () => {
   formEditImage.classList.remove('hidden');
   body.classList.add('modal-open');
-  boxWithSize.value = `${sizePhoto*100}%`;
 
   rangeContainer.noUiSlider.on('update',onUpdateSlider);
   addSizePhotoButton.addEventListener('click', getReSizePhoto);
@@ -57,8 +57,6 @@ const  onOpenFormEditImage = () => {
 
 inputFile.addEventListener('input', onOpenFormEditImage);
 
-
-// const buttonUploadComment = document.querySelector('#upload-submit');
 
 const onRemoveKeyDown = () => {
   document.removeEventListener('keydown', onCloseFormEditImageKeydown);
@@ -140,5 +138,7 @@ commentInput.addEventListener('input', getValidComment);
 commentInput.addEventListener('focus', onRemoveKeyDown);
 commentInput.addEventListener('blur', onAddKeyDown);
 
+buttonSendPhoto.addEventListener('click', sendPhoto);
 
-export {formEditImage, formUploadFile};
+
+export {formEditImage, formUploadFile, onCloseFormEditImageKeydown};

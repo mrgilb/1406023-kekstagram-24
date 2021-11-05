@@ -1,5 +1,5 @@
-import {libraryDesc} from './data.js';
 import {onOpenBigPhoto} from './photo-view.js';
+
 
 const miniature = document.querySelector('#picture').content;
 
@@ -18,13 +18,16 @@ const renderMiniature = (dataUser) => {
   return newMiniature;
 };
 
-const dataBaseMiniature = libraryDesc.map(renderMiniature);
 const miniatureContainer = document.querySelector('.pictures');
 
 const addingMiniature = (chosenMiniature) => {
   miniatureContainer.appendChild(chosenMiniature);
 };
 
-dataBaseMiniature.forEach(addingMiniature);
+const addingContent = (dataUsers) => {
+  const dataBaseMiniature = dataUsers.map(renderMiniature);
+  dataBaseMiniature.forEach(addingMiniature);
+};
 
-export{renderMiniature};
+
+export{renderMiniature, miniatureContainer, addingMiniature, addingContent};

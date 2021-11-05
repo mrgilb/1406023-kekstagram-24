@@ -109,8 +109,14 @@ const onCloseBigPhoto = (evt) => {
 
 const onOpenBigPhoto = (evt, dataUser) => {
   evt.preventDefault();
-  quantityComment = 5;
-
+  if (dataUser.comments.length < 5) {
+    quantityComment = dataUser.comments.length;
+    buttonLoadingNewComment.classList.add('hidden');
+  }
+  else {
+    quantityComment = 5;
+    buttonLoadingNewComment.classList.remove('hidden');
+  }
   initialCommentCount.textContent = String(quantityComment);
   bigPhotoCountComment.textContent = dataUser.comments.length;
   bigPhotoDescription.textContent = dataUser.description;
@@ -128,7 +134,7 @@ const onOpenBigPhoto = (evt, dataUser) => {
   closeButtonBigPhoto.addEventListener('click', onCloseBigPhoto, {once:true});
   document.addEventListener('keydown', onCloseBigPhotoKeydown);
 
-  buttonLoadingNewComment.classList.remove('hidden');
+
   fullScreenPhotoContainer.classList.remove('hidden');
   body.classList.add('modal-open');
   likesButton.focus();
