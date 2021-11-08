@@ -32,11 +32,10 @@ const clearMiniatures = () => {
 };
 
 
-const addingContent = (dataUsers, filterMethod) => {
+const addingContent = (dataUsers) => {
   clearMiniatures();
   const copyData = dataUsers.slice();
-  const filteredData = filterMethod(copyData);
-  const dataBaseMiniature = filteredData.map(renderMiniature);
+  const dataBaseMiniature = copyData.map(renderMiniature);
   dataBaseMiniature.forEach(addingMiniature);
 };
 

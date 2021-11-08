@@ -1,5 +1,7 @@
 const filtersContainer = document.querySelector('.img-filters');
-const filterButtons = filtersContainer.querySelector('.img-filters__form');
+const filterCommentsButton = filtersContainer.querySelector('#filter-discussed');
+const filterRandomButton = filtersContainer.querySelector('#filter-random');
+const filterDefaultButton = filtersContainer.querySelector('#filter-default');
 const buttonsSetFilter = filtersContainer.querySelectorAll('.img-filters__button');
 
 const showFilters = () => filtersContainer.classList.remove('img-filters--inactive');
@@ -41,4 +43,44 @@ const filterRandom = (dataUsers) => {
   return sortedData;
 };
 
-export {filterDefault, filterComment, filterButtons, showFilters, setActiveButton, filterRandom};
+const setFilterComments = (cb) => {
+  filterCommentsButton.addEventListener('click', (evt) => {
+    if(evt.target.matches('#filter-discussed')){
+      setActiveButton();
+      evt.target.classList.add('img-filters__button--active');
+      cb();
+    }
+  });
+};
+
+const setFilterDefault = (cb) => {
+  filterDefaultButton.addEventListener('click', (evt) => {
+    if(evt.target.matches('#filter-default')){
+      setActiveButton();
+      evt.target.classList.add('img-filters__button--active');
+      cb();
+    }
+  });
+};
+
+const setFilterRandom = (cb) => {
+  filterRandomButton.addEventListener('click', (evt) => {
+    if(evt.target.matches('#filter-random')){
+      setActiveButton();
+      evt.target.classList.add('img-filters__button--active');
+      cb();
+    }
+  });
+};
+
+export {filterDefault,
+  filterComment,
+  filterCommentsButton,
+  filterRandomButton,
+  filterDefaultButton,
+  showFilters,
+  setActiveButton,
+  filterRandom,
+  setFilterComments,
+  setFilterDefault,
+  setFilterRandom};
