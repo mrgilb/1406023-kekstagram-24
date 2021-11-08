@@ -12,7 +12,9 @@ import {
   setFilterRandom,
   filterRandom
 } from './sort.js';
+import {debounce} from './debounce.js';
 
+const TIMEOUT_DELAY = 500;
 
 const createLoader = (onSuccess, onError) =>
   fetch('https://24.javascript.pages.academy/kekstagram/data')
@@ -28,9 +30,9 @@ const createLoader = (onSuccess, onError) =>
 
 createLoader((data) => {
   addingContent(data, filterDefault);
-  setFilterComments(()=> addingContent(filterComment(data)));
-  setFilterDefault(()=> addingContent(filterDefault(data)));
-  setFilterRandom(()=> addingContent(filterRandom(data)));
+  setFilterComments(debounce(()=>  addingContent(filterComment(data)), TIMEOUT_DELAY));
+  setFilterDefault(debounce(()=> addingContent(filterDefault(data)), TIMEOUT_DELAY));
+  setFilterRandom(debounce(()=> addingContent(filterRandom(data)), TIMEOUT_DELAY));
 }, showAlert).then(showFilters);
 
 
