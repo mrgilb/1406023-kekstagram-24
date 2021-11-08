@@ -3,9 +3,10 @@ import {showAlert, showSuccessfulPost, showUnsuccessfulPost} from './allerts.js'
 import {closeFormEditImage} from './editing-photo.js';
 import {formUploadFile} from './form-upload-file.js';
 import {onCloseFormEditImageKeydown} from './form-upload-file.js';
+import {filterComment, filterDefault, filterButtons, showFilters, setActiveButton, filterRandom} from './sort.js';
 
 
-const createLoader = (onSuccess, onError) => () =>
+const createLoader = (onSuccess, onError) =>
   fetch('https://24.javascript.pages.academy/kekstagram/data')
     .then((response) => {
       if (response.ok) {
@@ -16,8 +17,21 @@ const createLoader = (onSuccess, onError) => () =>
     .then((data) => onSuccess(data))
     .catch((err) => onError(err));
 
-const loadContent = createLoader(addingContent,showAlert);
-loadContent();
+createLoader((data) => addingContent(data ,filterDefault),showAlert).then(showFilters);
+
+filterButtons.addEventListener('click', (evt) => {
+  if (evt.target.matches('#filter-discussed')) {
+    createLoader((data) => addingContent(data ,filterComment),showAlert);
+  }
+  else if (evt.target.matches('#filter-default')) {
+    createLoader((data) => addingContent(data ,filterDefault),showAlert);
+  }
+  else if (evt.target.matches('#filter-random')) {
+    createLoader((data) => addingContent(data ,filterRandom),showAlert);
+  }
+  setActiveButton();
+  evt.target.classList.add('img-filters__button--active');
+});
 
 const sendPhoto = (evt) => {
   evt.preventDefault();
@@ -43,4 +57,4 @@ const sendPhoto = (evt) => {
     .catch((err) => (err));
 };
 
-export {sendPhoto};
+export {sendPhoto, createLoader};
