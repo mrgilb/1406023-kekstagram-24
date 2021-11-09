@@ -3,9 +3,20 @@ import {showAlert, showSuccessfulPost, showUnsuccessfulPost} from './allerts.js'
 import {closeFormEditImage} from './editing-photo.js';
 import {formUploadFile} from './form-upload-file.js';
 import {onCloseFormEditImageKeydown} from './form-upload-file.js';
+import {
+  filterComment,
+  filterDefault,
+  setFilterComments,
+  setFilterDefault,
+  showFilters,
+  setFilterRandom,
+  filterRandom
+} from './sort.js';
+import {debounce} from './debounce.js';
 
+const TIMEOUT_DELAY = 500;
 
-const createLoader = (onSuccess, onError) => () =>
+const createLoader = (onSuccess, onError) =>
   fetch('https://24.javascript.pages.academy/kekstagram/data')
     .then((response) => {
       if (response.ok) {
@@ -16,8 +27,14 @@ const createLoader = (onSuccess, onError) => () =>
     .then((data) => onSuccess(data))
     .catch((err) => onError(err));
 
-const loadContent = createLoader(addingContent,showAlert);
-loadContent();
+
+createLoader((data) => {
+  addingContent(data, filterDefault);
+  setFilterComments(debounce(()=>  addingContent(filterComment(data)), TIMEOUT_DELAY));
+  setFilterDefault(debounce(()=> addingContent(filterDefault(data)), TIMEOUT_DELAY));
+  setFilterRandom(debounce(()=> addingContent(filterRandom(data)), TIMEOUT_DELAY));
+}, showAlert).then(showFilters);
+
 
 const sendPhoto = (evt) => {
   evt.preventDefault();
@@ -43,4 +60,4 @@ const sendPhoto = (evt) => {
     .catch((err) => (err));
 };
 
-export {sendPhoto};
+export {sendPhoto, createLoader};

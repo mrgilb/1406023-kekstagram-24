@@ -24,8 +24,18 @@ const addingMiniature = (chosenMiniature) => {
   miniatureContainer.appendChild(chosenMiniature);
 };
 
+const clearMiniatures = () => {
+  const miniaturesLabel = miniatureContainer.querySelectorAll('.picture');
+  for (const miniatureItem of miniaturesLabel) {
+    miniatureContainer.removeChild(miniatureItem);
+  }
+};
+
+
 const addingContent = (dataUsers) => {
-  const dataBaseMiniature = dataUsers.map(renderMiniature);
+  clearMiniatures();
+  const copyData = dataUsers.slice();
+  const dataBaseMiniature = copyData.map(renderMiniature);
   dataBaseMiniature.forEach(addingMiniature);
 };
 
