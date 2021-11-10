@@ -12,7 +12,7 @@ import {
   setFilterRandom,
   filterRandom
 } from './sort.js';
-import {debounce} from './debounce.js';
+import {debounce} from './utils/utils.js';
 
 const TIMEOUT_DELAY = 500;
 
@@ -28,18 +28,11 @@ const createLoader = (onSuccess, onError) =>
     .catch((err) => onError(err));
 
 
-createLoader((data) => {
-  addingContent(data, filterDefault);
-  setFilterComments(debounce(()=>  addingContent(filterComment(data)), TIMEOUT_DELAY));
-  setFilterDefault(debounce(()=> addingContent(filterDefault(data)), TIMEOUT_DELAY));
-  setFilterRandom(debounce(()=> addingContent(filterRandom(data)), TIMEOUT_DELAY));
-}, showAlert).then(showFilters);
-
-
 const sendPhoto = (evt) => {
   evt.preventDefault();
 
   const formData = new FormData(formUploadFile);
+
   fetch('https://24.javascript.pages.academy/kekstagram',
     {
       method: 'POST',
@@ -59,5 +52,13 @@ const sendPhoto = (evt) => {
     })
     .catch((err) => (err));
 };
+
+
+createLoader((data) => {
+  addingContent(data, filterDefault);
+  setFilterComments(debounce(()=>  addingContent(filterComment(data)), TIMEOUT_DELAY));
+  setFilterDefault(debounce(()=> addingContent(filterDefault(data)), TIMEOUT_DELAY));
+  setFilterRandom(debounce(()=> addingContent(filterRandom(data)), TIMEOUT_DELAY));
+}, showAlert).then(showFilters);
 
 export {sendPhoto, createLoader};

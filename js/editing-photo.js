@@ -2,6 +2,7 @@ import '/nouislider/nouislider.js';
 import {body} from './photo-view.js';
 import {formUploadFile, formEditImage} from './form-upload-file.js';
 
+
 const containerEditingPhoto = document.querySelector('.img-upload__preview-container');
 const addSizePhotoButton = containerEditingPhoto.querySelector('.scale__control--bigger');
 const reduceSizePhotoButton = containerEditingPhoto.querySelector('.scale__control--smaller');
@@ -12,10 +13,10 @@ const photo = containerEditingPhoto.querySelector('img');
 const rangeContainer = containerEditingPhoto.querySelector('.effect-level__slider');
 const listEffects = document.querySelector('.effects__list');
 const defaultRadioChecked = document.querySelector('#effect-none');
+const noneEffect = 'effect-none';
 
 let currentPositionSlider;
 let sizePhoto = 1;
-const noneEffect = 'effect-none';
 boxWithSize.value = '100%';
 
 fieldsetForRange.classList.add('hidden');
@@ -107,6 +108,7 @@ const effects = [
   },
 ];
 
+
 const onUpdateSlider = (handle) => {
   for (const effect of effects) {
     const arrayClass = String(photo.classList);
@@ -118,6 +120,7 @@ const onUpdateSlider = (handle) => {
     }
   }
 };
+
 
 const onAddEffect = (evt) => {
   sizePhoto = 1;
@@ -145,6 +148,7 @@ const onAddEffect = (evt) => {
     }
   }
 };
+
 
 const closeFormEditImage = () => {
   sizePhoto = 1;

@@ -1,5 +1,4 @@
-import {isEscapeKey} from './photo-view.js';
-import {checksString} from './check-string-length.js';
+import {isEscapeKey, checksString, hasDuplicates} from './utils/utils.js';
 import {body} from './photo-view.js';
 import {
   rangeContainer,
@@ -28,6 +27,7 @@ const regularExp = /[A-Za-zА-Яа-яЁё0-9]$/;
 const commentInput = document.querySelector('.text__description');
 const buttonSendPhoto = document.querySelector('#upload-submit');
 
+
 const onCloseFormEditImageKeydown = (evt) => {
   if (isEscapeKey(evt)){
     closeFormEditImage();
@@ -35,13 +35,11 @@ const onCloseFormEditImageKeydown = (evt) => {
   }
 };
 
+
 const onCloseFormEditImage = () => {
   closeFormEditImage();
   document.removeEventListener('keydown', onCloseFormEditImageKeydown);
 };
-
-
-buttonCloseFormUploadFile.addEventListener('click', onCloseFormEditImage);
 
 
 const  onOpenFormEditImage = () => {
@@ -55,19 +53,16 @@ const  onOpenFormEditImage = () => {
   document.addEventListener('keydown',onCloseFormEditImageKeydown);
 };
 
-inputFile.addEventListener('input', onOpenFormEditImage);
-
 
 const onRemoveKeyDown = () => {
   document.removeEventListener('keydown', onCloseFormEditImageKeydown);
 };
 
+
 const  onAddKeyDown = () => {
   document.addEventListener('keydown', onCloseFormEditImageKeydown);
 };
 
-inputHashtags.addEventListener('focus',onRemoveKeyDown);
-inputHashtags.addEventListener('blur', onAddKeyDown);
 
 const checkOneHashtag = (oneHashtag) => {
   const lengthHashtag = String(oneHashtag).length;
@@ -95,13 +90,6 @@ const checkOneHashtag = (oneHashtag) => {
   inputHashtags.reportValidity();
 };
 
-const getLowerCase = (element) => String(element.toLowerCase());
-
-const hasDuplicates = (array) => {
-  const newArray = array.map(getLowerCase);
-  return (new Set(newArray)).size !== newArray.length;
-};
-
 const getValidityHashTag = () => {
   const listHashtags = inputHashtags.value.split(' ');
   if (hasDuplicates(listHashtags)) {
@@ -122,7 +110,6 @@ const getValidityHashTag = () => {
   inputHashtags.reportValidity();
 };
 
-inputHashtags.addEventListener('input', getValidityHashTag);
 
 const getValidComment = () => {
   const string = commentInput.value;
@@ -134,11 +121,19 @@ const getValidComment = () => {
   commentInput.reportValidity();
 };
 
+buttonCloseFormUploadFile.addEventListener('click', onCloseFormEditImage);
+
 commentInput.addEventListener('input', getValidComment);
 commentInput.addEventListener('focus', onRemoveKeyDown);
 commentInput.addEventListener('blur', onAddKeyDown);
 
 buttonSendPhoto.addEventListener('click', sendPhoto);
+
+inputFile.addEventListener('input', onOpenFormEditImage);
+
+inputHashtags.addEventListener('focus',onRemoveKeyDown);
+inputHashtags.addEventListener('blur', onAddKeyDown);
+inputHashtags.addEventListener('input', getValidityHashTag);
 
 
 export {formEditImage, formUploadFile, onCloseFormEditImageKeydown};

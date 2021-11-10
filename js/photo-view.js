@@ -1,4 +1,5 @@
 import './render-photos.js';
+import {isEscapeKey, isEnterKey} from './utils/utils.js';
 
 
 const fullScreenPhotoContainer = document.querySelector('.big-picture ');
@@ -15,15 +16,14 @@ const initialCommentCount = fullScreenPhotoContainer.querySelector('.initial-com
 const containerComments = fullScreenPhotoContainer.querySelector('.social__comments');
 let numberLikes = likesCount.textContent;
 let currentCommentsList;
+let quantityComment = 5;
 
 const addingFixedCountComment = (array, maxComment) => array.slice(0, maxComment);
-let quantityComment = 5;
+
 
 const increaseCountComment = () => {
   quantityComment +=5;
 };
-
-const isEnterKey = (evt) => evt.key === 'Enter';
 
 const addedLikes = () => {
   numberLikes = bigPhotoLikes.textContent;
@@ -44,6 +44,7 @@ const onAddedLikes = (evt) => {
   addedLikes();
 };
 
+
 const onAddedLikesKeydown = (evt) => {
   if (isEnterKey(evt)) {
     evt.preventDefault();
@@ -51,7 +52,6 @@ const onAddedLikesKeydown = (evt) => {
   }
 };
 
-const isEscapeKey = (evt) => evt.key === 'Escape';
 
 const getCommentList = (elementDataBase) => {
   const itemList = document.createElement('li');
@@ -66,6 +66,7 @@ const getCommentList = (elementDataBase) => {
   textComment.textContent = elementDataBase.message;
   return itemList;
 };
+
 
 const addOneComment = (chosenComment) => {
   containerComments.appendChild(chosenComment);
@@ -84,7 +85,9 @@ const getChangedListComment = (evt, array) => {
   newComments.forEach(addOneComment);
 };
 
+
 const onChangedList = (evt) => getChangedListComment(evt, currentCommentsList);
+
 
 const closeBigPhoto = () => {
   fullScreenPhotoContainer.classList.add('hidden');
@@ -94,6 +97,7 @@ const closeBigPhoto = () => {
   document.removeEventListener('keydown', onAddedLikesKeydown);
 };
 
+
 const onCloseBigPhotoKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     closeBigPhoto();
@@ -101,11 +105,13 @@ const onCloseBigPhotoKeydown = (evt) => {
   }
 };
 
+
 const onCloseBigPhoto = (evt) => {
   evt.preventDefault();
   closeBigPhoto();
   document.removeEventListener('keydown', onCloseBigPhotoKeydown);
 };
+
 
 const onOpenBigPhoto = (evt, dataUser) => {
   evt.preventDefault();
@@ -139,5 +145,6 @@ const onOpenBigPhoto = (evt, dataUser) => {
   body.classList.add('modal-open');
   likesButton.focus();
 };
+
 
 export {onOpenBigPhoto, isEscapeKey, body};

@@ -1,5 +1,5 @@
 import {body} from './photo-view.js';
-import  {isEscapeKey} from './photo-view.js';
+import  {isEscapeKey} from './utils/utils.js';
 
 const ALERT_SHOW_TIME = 5000;
 
@@ -24,9 +24,9 @@ const showAlert = (message) => {
   }, ALERT_SHOW_TIME);
 };
 
-export {showAlert};
 
 const containerShowSuccessfulPost = document.querySelector('#success').content;
+const sampleUnsuccessfulAllert = document.querySelector('#error').content;
 
 
 const showSuccessfulPost = () => {
@@ -61,9 +61,6 @@ const showSuccessfulPost = () => {
   cancelButtonSuccessfulAllert.addEventListener('click', onClickButtonAllert);
 };
 
-export {showSuccessfulPost};
-
-const sampleUnsuccessfulAllert = document.querySelector('#error').content;
 
 const showUnsuccessfulPost = () => {
   const newUnsuccessfulAllert = sampleUnsuccessfulAllert.cloneNode(true);
@@ -98,5 +95,6 @@ const showUnsuccessfulPost = () => {
   cancelButtonUnsuccessfulAllert.addEventListener('click', onClickButtonUnsuccessfulAllert);
 };
 
-export {showUnsuccessfulPost};
+
+export {showAlert, showSuccessfulPost, showUnsuccessfulPost};
 

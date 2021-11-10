@@ -1,4 +1,5 @@
-import './utils/render-photos.js';
-import './utils/form-upload-file.js';
-import './utils/editing-photo.js';
-import  './utils/new-data.js';
+import './render-photos.js';
+import './form-upload-file.js';
+import './editing-photo.js';
+import  './new-data.js';
+import './utils/utils.js';
