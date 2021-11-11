@@ -169,4 +169,4 @@ inputHashtags.addEventListener('blur', onAddKeyDown);
 inputHashtags.addEventListener('input', getValidityHashTag);
 
 
-export {formEditImage, formUploadFile, onCloseFormEditImageKeydown};
+export {formEditImage, formUploadFile, onCloseFormEditImageKeydown, inputHashtags, buttonCloseFormUploadFile, commentInput};

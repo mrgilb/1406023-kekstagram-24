@@ -1,6 +1,6 @@
 import '/nouislider/nouislider.js';
 import {body} from './photo-view.js';
-import {formUploadFile, formEditImage} from './form-upload-file.js';
+import {formUploadFile, formEditImage, buttonCloseFormUploadFile, inputHashtags} from './form-upload-file.js';
 
 
 const containerEditingPhoto = document.querySelector('.img-upload__preview-container');
@@ -160,6 +160,8 @@ const closeFormEditImage = () => {
   formForSubmiting.value = '';
   rangeContainer.noUiSlider.off('update',onUpdateSlider);
 
+  inputHashtags.removeAttribute('style');
+  buttonCloseFormUploadFile.disable = false;
   fieldsetForRange.classList.add('hidden');
   formEditImage.classList.add('hidden');
   body.classList.remove('modal-open');
