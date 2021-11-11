@@ -1,5 +1,5 @@
 import {addingContent} from './render-photos.js';
-import {showAlert, showSuccessfulPost, showUnsuccessfulPost} from './allerts.js';
+import {showAlert, showSuccessfulPost, showUnsuccessfulPost} from './alerts.js';
 import {closeFormEditImage} from './editing-photo.js';
 import {formUploadFile} from './form-upload-file.js';
 import {onCloseFormEditImageKeydown} from './form-upload-file.js';
