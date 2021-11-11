@@ -81,6 +81,10 @@ const checkOneHashtag = (oneHashtag) => {
   if (!oneHashtag.startsWith(FIRST_SYMBOL_HASHTAG, 0)) {
     inputHashtags.setCustomValidity(`Первый символ должен быть ${FIRST_SYMBOL_HASHTAG}`);
     addInfoInvalidHashtag();
+    if (inputHashtags.value === ''){
+      inputHashtags.setCustomValidity('');
+      addInfoValidHashtag();
+    }
   }
   else  if(String(oneHashtag) === FIRST_SYMBOL_HASHTAG) {
     inputHashtags.setCustomValidity(`Хештег не может содержать только ${FIRST_SYMBOL_HASHTAG}`);
