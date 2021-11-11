@@ -26,73 +26,73 @@ const showAlert = (message) => {
 
 
 const containerShowSuccessfulPost = document.querySelector('#success').content;
-const sampleUnsuccessfulAllert = document.querySelector('#error').content;
+const sampleUnsuccessfulAlert = document.querySelector('#error').content;
 
 
 const showSuccessfulPost = () => {
-  const newAllert = containerShowSuccessfulPost.cloneNode(true);
-  const containerNewAllert = newAllert.querySelector('.success');
-  const cancelButtonSuccessfulAllert = newAllert.querySelector('.success__button');
+  const newAlert = containerShowSuccessfulPost.cloneNode(true);
+  const containerNewAlert = newAlert.querySelector('.success');
+  const cancelButtonSuccessfulAlert = newAlert.querySelector('.success__button');
 
 
-  const onKeydownCloseAllert = (evt) => {
+  const onKeydownCloseAlert = (evt) => {
     if (isEscapeKey(evt)) {
-      containerNewAllert.remove();
-      document.removeEventListener('keydown', onKeydownCloseAllert);
+      containerNewAlert.remove();
+      document.removeEventListener('keydown', onKeydownCloseAlert);
     }
   };
 
-  const onClickCloseAllert = (evt) => {
+  const onClickCloseAlert = (evt) => {
     if (evt.target.matches('.success')) {
-      containerNewAllert.remove();
-      document.removeEventListener('keydown', onKeydownCloseAllert);
+      containerNewAlert.remove();
+      document.removeEventListener('keydown', onKeydownCloseAlert);
     }
   };
 
-  const onClickButtonAllert = (evt) => {
+  const onClickButtonAlert = (evt) => {
     evt.preventDefault();
-    containerNewAllert.remove();
-    document.removeEventListener('keydown', onKeydownCloseAllert);
+    containerNewAlert.remove();
+    document.removeEventListener('keydown', onKeydownCloseAlert);
   };
 
-  body.appendChild(newAllert);
-  document.addEventListener('keydown', onKeydownCloseAllert);
-  containerNewAllert.addEventListener('click', onClickCloseAllert);
-  cancelButtonSuccessfulAllert.addEventListener('click', onClickButtonAllert);
+  body.appendChild(newAlert);
+  document.addEventListener('keydown', onKeydownCloseAlert);
+  containerNewAlert.addEventListener('click', onClickCloseAlert);
+  cancelButtonSuccessfulAlert.addEventListener('click', onClickButtonAlert);
 };
 
 
 const showUnsuccessfulPost = () => {
-  const newUnsuccessfulAllert = sampleUnsuccessfulAllert.cloneNode(true);
-  const containerUnsuccessfulAllert = newUnsuccessfulAllert.querySelector('.error');
-  const cancelButtonUnsuccessfulAllert = newUnsuccessfulAllert.querySelector('.error__button');
+  const newUnsuccessfulAlert = sampleUnsuccessfulAlert.cloneNode(true);
+  const containerUnsuccessfulAlert = newUnsuccessfulAlert.querySelector('.error');
+  const cancelButtonUnsuccessfulAlert = newUnsuccessfulAlert.querySelector('.error__button');
 
 
-  const onKeydownCloseUnsuccessfulAllert = (evt) => {
+  const onKeydownCloseUnsuccessfulAlert = (evt) => {
     if (isEscapeKey(evt)) {
-      containerUnsuccessfulAllert.remove();
-      document.removeEventListener('keydown', onKeydownCloseUnsuccessfulAllert);
+      containerUnsuccessfulAlert.remove();
+      document.removeEventListener('keydown', onKeydownCloseUnsuccessfulAlert);
     }
   };
 
   const onClickCloseUnsuccessfulAllert = (evt) => {
     if (evt.target.matches('.error')) {
-      containerUnsuccessfulAllert.remove();
-      document.removeEventListener('keydown', onKeydownCloseUnsuccessfulAllert);
+      containerUnsuccessfulAlert.remove();
+      document.removeEventListener('keydown', onKeydownCloseUnsuccessfulAlert);
     }
   };
 
   const onClickButtonUnsuccessfulAllert = (evt) => {
     evt.preventDefault();
-    containerUnsuccessfulAllert.remove();
-    document.removeEventListener('keydown', onKeydownCloseUnsuccessfulAllert);
+    containerUnsuccessfulAlert.remove();
+    document.removeEventListener('keydown', onKeydownCloseUnsuccessfulAlert);
   };
 
 
-  body.appendChild(newUnsuccessfulAllert);
-  document.addEventListener('keydown', onKeydownCloseUnsuccessfulAllert);
-  containerUnsuccessfulAllert.addEventListener('click', onClickCloseUnsuccessfulAllert);
-  cancelButtonUnsuccessfulAllert.addEventListener('click', onClickButtonUnsuccessfulAllert);
+  body.appendChild(newUnsuccessfulAlert);
+  document.addEventListener('keydown', onKeydownCloseUnsuccessfulAlert);
+  containerUnsuccessfulAlert.addEventListener('click', onClickCloseUnsuccessfulAllert);
+  cancelButtonUnsuccessfulAlert.addEventListener('click', onClickButtonUnsuccessfulAllert);
 };
 
 

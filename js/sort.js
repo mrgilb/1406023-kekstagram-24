@@ -25,10 +25,7 @@ const compareComment = (elementA, elementB) => {
 };
 
 
-const filterComment = (dataUsers) => {
-  const sortedData = dataUsers.sort(compareComment);
-  return sortedData;
-};
+const filterComment = (dataUsers) => dataUsers.sort(compareComment);
 
 
 const compareId = (elementA, elementB) => {
