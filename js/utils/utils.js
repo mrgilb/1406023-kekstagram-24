@@ -6,9 +6,9 @@ const isEscapeKey = (evt) => evt.key === 'Escape';
 
 const getLowerCase = (element) => String(element.toLowerCase());
 
-const hasDuplicates = (array) => {
-  const lowercaseStrings = array.map(getLowerCase);
-  return (new Set(lowercaseStrings)).size !== lowercaseStrings.length;
+const hasDuplicates = (Strings) => {
+  const lowerCaseStrings = Strings.map(getLowerCase);
+  return (new Set(lowerCaseStrings)).size !== lowerCaseStrings.length;
 };
 
 const debounce = (callback, timeoutDelay) => {

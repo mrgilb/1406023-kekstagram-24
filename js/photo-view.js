@@ -18,7 +18,7 @@ let numberLikes = likesCount.textContent;
 let currentCommentsList;
 let quantityComment = 5;
 
-const addingFixedCountComment = (array, maxComment) => array.slice(0, maxComment);
+const addFixedCountComment = (array, maxComment) => array.slice(0, maxComment);
 
 
 const increaseCountComment = () => {
@@ -76,7 +76,7 @@ const addOneComment = (chosenComment) => {
 const getChangedListComment = (evt, array) => {
   evt.preventDefault();
   increaseCountComment();
-  const newComments = addingFixedCountComment(array, quantityComment);
+  const newComments = addFixedCountComment(array, quantityComment);
   initialCommentCount.textContent = newComments.length;
   if (array.length === newComments.length){
     buttonLoadingNewComment.classList.add('hidden');
@@ -132,8 +132,8 @@ const onOpenBigPhoto = (evt, dataUser) => {
   currentCommentsList = dataUser.comments.map(getCommentList);
   containerComments.innerHTML = '';
 
-  const fixedListOfComments = addingFixedCountComment(currentCommentsList, quantityComment);
-  fixedListOfComments.forEach(addOneComment);
+  const comments = addFixedCountComment(currentCommentsList, quantityComment);
+  comments.forEach(addOneComment);
   buttonLoadingNewComment.addEventListener('click', onChangedList);
   likesButton.addEventListener('click', onAddLikes);
   document.addEventListener('keydown', onAddLikesKeydown);
