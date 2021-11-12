@@ -6,11 +6,11 @@ import {
   reduceSizePhotoButton,
   listEffects,
   onUpdateSlider,
-  getReSizePhoto,
+  onReSizePhoto,
   onAddEffect,
   closeFormEditImage
 } from './editing-photo.js';
-import {sendPhoto} from './new-data.js';
+import {onSendPhoto} from './new-data.js';
 
 const MIN_HASHTAG_LENGTH = 3;
 const MAX_HASHTAG_LENGTH = 20;
@@ -48,8 +48,8 @@ const  onOpenFormEditImage = () => {
   body.classList.add('modal-open');
 
   rangeContainer.noUiSlider.on('update',onUpdateSlider);
-  addSizePhotoButton.addEventListener('click', getReSizePhoto);
-  reduceSizePhotoButton.addEventListener('click', getReSizePhoto);
+  addSizePhotoButton.addEventListener('click', onReSizePhoto);
+  reduceSizePhotoButton.addEventListener('click', onReSizePhoto);
   listEffects.addEventListener('click',onAddEffect);
   document.addEventListener('keydown',onCloseFormEditImageKeydown);
 };
@@ -115,7 +115,7 @@ const checkOneHashtag = (oneHashtag) => {
   inputHashtags.reportValidity();
 };
 
-const getValidityHashTag = () => {
+const onValidityHashTag = () => {
   const listHashtags = inputHashtags.value.split(' ');
   if (hasDuplicates(listHashtags)) {
     inputHashtags.setCustomValidity('Хештеги должны быть разными');
@@ -140,7 +140,7 @@ const getValidityHashTag = () => {
 };
 
 
-const getValidComment = () => {
+const ontValidComment = () => {
   const string = commentInput.value;
   if (!checksString(string, MAX_SYMBOLS_COMMENT)) {
     commentInput.setCustomValidity('Комментарий должен быть не более 140 символов');
@@ -156,17 +156,17 @@ const getValidComment = () => {
 
 buttonCloseFormUploadFile.addEventListener('click', onCloseFormEditImage);
 
-commentInput.addEventListener('input', getValidComment);
+commentInput.addEventListener('input', ontValidComment);
 commentInput.addEventListener('focus', onRemoveKeyDown);
 commentInput.addEventListener('blur', onAddKeyDown);
 
-buttonSendPhoto.addEventListener('click', sendPhoto);
+buttonSendPhoto.addEventListener('click', onSendPhoto);
 
 inputFile.addEventListener('input', onOpenFormEditImage);
 
 inputHashtags.addEventListener('focus',onRemoveKeyDown);
 inputHashtags.addEventListener('blur', onAddKeyDown);
-inputHashtags.addEventListener('input', getValidityHashTag);
+inputHashtags.addEventListener('input', onValidityHashTag);
 
 
-export {formEditImage, formUploadFile, onCloseFormEditImageKeydown, inputHashtags, buttonCloseFormUploadFile, commentInput};
+export {formEditImage, formUploadFile, onCloseFormEditImageKeydown, inputHashtags, buttonCloseFormUploadFile, commentInput, inputFile};

@@ -1,4 +1,4 @@
-import {addingContent} from './render-photos.js';
+import {addContent} from './render-photos.js';
 import {showAlert, showSuccessfulPost, showUnsuccessfulPost} from './alerts.js';
 import {closeFormEditImage} from './editing-photo.js';
 import {formUploadFile} from './form-upload-file.js';
@@ -15,9 +15,11 @@ import {
 import {debounce} from './utils/utils.js';
 
 const TIMEOUT_DELAY = 500;
+const FROM_BACKEND = 'https://24.javascript.pages.academy/kekstagram/data';
+const SEND_TO_BACKEND = 'https://24.javascript.pages.academy/kekstagram';
 
 const createLoader = (onSuccess, onError) =>
-  fetch('https://24.javascript.pages.academy/kekstagram/data')
+  fetch(FROM_BACKEND)
     .then((response) => {
       if (response.ok) {
         return  response.json();
@@ -25,15 +27,16 @@ const createLoader = (onSuccess, onError) =>
       throw new Error(`${response.status} — ${response.statusText}`);
     })
     .then((data) => onSuccess(data))
+    .then(showFilters)
     .catch((err) => onError(err));
 
 
-const sendPhoto = (evt) => {
+const onSendPhoto = (evt) => {
   evt.preventDefault();
 
   const formData = new FormData(formUploadFile);
 
-  fetch('https://24.javascript.pages.academy/kekstagram',
+  fetch(SEND_TO_BACKEND,
     {
       method: 'POST',
       body: formData,
@@ -55,10 +58,10 @@ const sendPhoto = (evt) => {
 
 
 createLoader((data) => {
-  addingContent(data, filterDefault);
-  setFilterComments(debounce(()=>  addingContent(filterComment(data)), TIMEOUT_DELAY));
-  setFilterDefault(debounce(()=> addingContent(filterDefault(data)), TIMEOUT_DELAY));
-  setFilterRandom(debounce(()=> addingContent(filterRandom(data)), TIMEOUT_DELAY));
-}, showAlert).then(showFilters);
+  addContent(data, filterDefault);
+  setFilterComments(debounce(()=>  addContent(filterComment(data)), TIMEOUT_DELAY));
+  setFilterDefault(debounce(()=> addContent(filterDefault(data)), TIMEOUT_DELAY));
+  setFilterRandom(debounce(()=> addContent(filterRandom(data)), TIMEOUT_DELAY));
+}, showAlert);
 
-export {sendPhoto, createLoader};
+export {onSendPhoto, createLoader};

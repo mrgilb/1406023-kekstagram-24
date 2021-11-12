@@ -21,7 +21,7 @@ boxWithSize.value = '100%';
 
 fieldsetForRange.classList.add('hidden');
 
-const getReSizePhoto = (evt) => {
+const onReSizePhoto = (evt) => {
   if (evt.target.matches('.scale__control--bigger')){
     if(sizePhoto < 1){
       sizePhoto += 0.25;
@@ -111,7 +111,7 @@ const effects = [
 
 const onUpdateSlider = (handle) => {
   for (const effect of effects) {
-    const arrayClass = String(photo.classList);
+    const arrayClass = photo.className;
     const changedEffect = effect.class;
     if (arrayClass.includes(changedEffect)) {
       currentPositionSlider = handle;
@@ -123,9 +123,6 @@ const onUpdateSlider = (handle) => {
 
 
 const onAddEffect = (evt) => {
-  sizePhoto = 1;
-  photo.style.transform = `scale(${sizePhoto})`;
-  boxWithSize.value = `${sizePhoto*100}%`;
   for  (const effect of effects) {
     if (evt.target.id === effect.id) {
       rangeContainer.noUiSlider.updateOptions({
@@ -166,11 +163,11 @@ const closeFormEditImage = () => {
   formEditImage.classList.add('hidden');
   body.classList.remove('modal-open');
   rangeContainer.noUiSlider.on('update',onUpdateSlider);
-  addSizePhotoButton.removeEventListener('click', getReSizePhoto);
-  reduceSizePhotoButton.removeEventListener('click', getReSizePhoto);
+  addSizePhotoButton.removeEventListener('click', onReSizePhoto);
+  reduceSizePhotoButton.removeEventListener('click', onReSizePhoto);
   listEffects.removeEventListener('click',onAddEffect);
   formUploadFile.reset();
 };
 
 
-export {rangeContainer, addSizePhotoButton, reduceSizePhotoButton, listEffects, onUpdateSlider, getReSizePhoto,onAddEffect, closeFormEditImage};
+export {rangeContainer, addSizePhotoButton, reduceSizePhotoButton, listEffects, onUpdateSlider, onReSizePhoto,onAddEffect, closeFormEditImage, photo};

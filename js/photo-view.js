@@ -25,7 +25,7 @@ const increaseCountComment = () => {
   quantityComment +=5;
 };
 
-const addedLikes = () => {
+const addLikes = () => {
   numberLikes = bigPhotoLikes.textContent;
   if (likesCount.classList.contains('likes-count--active')) {
     numberLikes--;
@@ -41,14 +41,14 @@ const addedLikes = () => {
 
 const onAddedLikes = (evt) => {
   evt.preventDefault();
-  addedLikes();
+  addLikes();
 };
 
 
 const onAddedLikesKeydown = (evt) => {
   if (isEnterKey(evt)) {
     evt.preventDefault();
-    addedLikes();
+    addLikes();
   }
 };
 
@@ -132,8 +132,8 @@ const onOpenBigPhoto = (evt, dataUser) => {
   currentCommentsList = dataUser.comments.map(getCommentList);
   containerComments.innerHTML = '';
 
-  const fixedListComment = addingFixedCountComment(currentCommentsList, quantityComment);
-  fixedListComment.forEach(addOneComment);
+  const fixedListOfComments = addingFixedCountComment(currentCommentsList, quantityComment);
+  fixedListOfComments.forEach(addOneComment);
   buttonLoadingNewComment.addEventListener('click', onChangedList);
   likesButton.addEventListener('click', onAddedLikes);
   document.addEventListener('keydown', onAddedLikesKeydown);

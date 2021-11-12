@@ -20,7 +20,7 @@ const renderMiniature = (dataUser) => {
 
 const miniatureContainer = document.querySelector('.pictures');
 
-const addingMiniature = (chosenMiniature) => {
+const addMiniature = (chosenMiniature) => {
   miniatureContainer.appendChild(chosenMiniature);
 };
 
@@ -32,12 +32,12 @@ const clearMiniatures = () => {
 };
 
 
-const addingContent = (dataUsers) => {
+const addContent = (dataUsers) => {
   clearMiniatures();
   const copyData = dataUsers.slice();
   const dataBaseMiniature = copyData.map(renderMiniature);
-  dataBaseMiniature.forEach(addingMiniature);
+  dataBaseMiniature.forEach(addMiniature);
 };
 
 
-export{renderMiniature, miniatureContainer, addingMiniature, addingContent};
+export{renderMiniature, miniatureContainer, addContent};

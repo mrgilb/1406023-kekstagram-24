@@ -1,3 +1,5 @@
+const MAX_RANDOM_COUNT_MINIATURE = 10;
+
 const filtersContainer = document.querySelector('.img-filters');
 const filterCommentsButton = filtersContainer.querySelector('#filter-discussed');
 const filterRandomButton = filtersContainer.querySelector('#filter-random');
@@ -5,8 +7,6 @@ const filterDefaultButton = filtersContainer.querySelector('#filter-default');
 const buttonsSetFilter = filtersContainer.querySelectorAll('.img-filters__button');
 
 const showFilters = () => filtersContainer.classList.remove('img-filters--inactive');
-
-const MAX_RANDOM_COUNT_MINIATURE = 10;
 
 
 const setActiveButton = () => {

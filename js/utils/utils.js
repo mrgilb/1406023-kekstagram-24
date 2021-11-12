@@ -7,17 +7,17 @@ const isEscapeKey = (evt) => evt.key === 'Escape';
 const getLowerCase = (element) => String(element.toLowerCase());
 
 const hasDuplicates = (array) => {
-  const newArray = array.map(getLowerCase);
-  return (new Set(newArray)).size !== newArray.length;
+  const lowercaseStrings = array.map(getLowerCase);
+  return (new Set(lowercaseStrings)).size !== lowercaseStrings.length;
 };
 
-function debounce (callback, timeoutDelay) {
+const debounce = (callback, timeoutDelay) => {
   let timeoutId;
 
   return (...rest) => {
     clearTimeout(timeoutId);
     timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
   };
-}
+};
 
 export {isEscapeKey, isEnterKey, checksString, hasDuplicates, debounce};
