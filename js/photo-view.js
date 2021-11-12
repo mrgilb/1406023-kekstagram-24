@@ -39,13 +39,13 @@ const addLikes = () => {
 };
 
 
-const onAddedLikes = (evt) => {
+const onAddLikes = (evt) => {
   evt.preventDefault();
   addLikes();
 };
 
 
-const onAddedLikesKeydown = (evt) => {
+const onAddLikesKeydown = (evt) => {
   if (isEnterKey(evt)) {
     evt.preventDefault();
     addLikes();
@@ -91,10 +91,10 @@ const onChangedList = (evt) => getChangedListComment(evt, currentCommentsList);
 
 const closeBigPhoto = () => {
   fullScreenPhotoContainer.classList.add('hidden');
-  likesButton.removeEventListener('click', onAddedLikes);
+  likesButton.removeEventListener('click', onAddLikes);
   body.classList.remove('modal-open');
   buttonLoadingNewComment.removeEventListener('click', onChangedList);
-  document.removeEventListener('keydown', onAddedLikesKeydown);
+  document.removeEventListener('keydown', onAddLikesKeydown);
 };
 
 
@@ -135,8 +135,8 @@ const onOpenBigPhoto = (evt, dataUser) => {
   const fixedListOfComments = addingFixedCountComment(currentCommentsList, quantityComment);
   fixedListOfComments.forEach(addOneComment);
   buttonLoadingNewComment.addEventListener('click', onChangedList);
-  likesButton.addEventListener('click', onAddedLikes);
-  document.addEventListener('keydown', onAddedLikesKeydown);
+  likesButton.addEventListener('click', onAddLikes);
+  document.addEventListener('keydown', onAddLikesKeydown);
   closeButtonBigPhoto.addEventListener('click', onCloseBigPhoto, {once:true});
   document.addEventListener('keydown', onCloseBigPhotoKeydown);
 
